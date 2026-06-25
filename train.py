@@ -42,10 +42,7 @@ def train():
         world_size=world_size,
     )
 
-    optimizer = torch.optim.Adam(
-        model.parameters(),
-        lr=1e-3,
-    )
+    optimizer = torch.optim.Adam(model.parameters(),lr=1e-3,)
 
     criterion = nn.CrossEntropyLoss()
     epochs = 5
@@ -56,12 +53,11 @@ def train():
         for x, y in dataloader:
             x = x.to(local_rank, non_blocking=True)
             y = y.to(local_rank, non_blocking=True)
+            
             optimizer.zero_grad()
             outputs = model(x)
-            loss = criterion(
-                outputs,
-                y,
-            )
+            
+            loss = criterion(outputs,y)
 
             loss.backward()
             optimizer.step()
